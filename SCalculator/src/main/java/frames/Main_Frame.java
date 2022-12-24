@@ -1,6 +1,7 @@
 package frames;
 
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,6 +64,7 @@ public class Main_Frame extends javax.swing.JFrame {
         resultField.setBackground(new java.awt.Color(102, 102, 102));
         resultField.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         resultField.setForeground(new java.awt.Color(255, 255, 255));
+        resultField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         resultField.setText("0");
         resultField.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -588,7 +590,7 @@ public class Main_Frame extends javax.swing.JFrame {
         String[] split_result = s_result.split("\\.");
 
         if (split_result[1].length() > 1) {
-            if (result <= 0.0) {
+            if (result == 0.0) {
                 if (this.resultField.getText().contains("+") || this.resultField.getText().contains("-") || this.resultField.getText().contains("x") || this.resultField.getText().contains("/")) {
                     String newText = this.resultField.getText().substring(0, this.resultField.getText().length() - 1);
                     this.resultField.setText(newText);
@@ -597,11 +599,13 @@ public class Main_Frame extends javax.swing.JFrame {
                     this.resultField.setText(last_Text);
                 }
             } else {
-                this.resultField.setText(String.valueOf(Math.abs(result)));
+                BigDecimal newResult = new BigDecimal(result);
+                newResult.setScale(5, BigDecimal.ROUND_HALF_UP);
+                this.resultField.setText(String.valueOf(result));
             }
         } else {
             int newResult = (int) result;
-            if (newResult <= 0) {
+            if (newResult == 0) {
                 if (this.resultField.getText().contains("+") || this.resultField.getText().contains("-") || this.resultField.getText().contains("x") || this.resultField.getText().contains("/")) {
                     String newText = this.resultField.getText().substring(0, this.resultField.getText().length() - 1);
                     this.resultField.setText(newText);
@@ -610,7 +614,7 @@ public class Main_Frame extends javax.swing.JFrame {
                     this.resultField.setText(last_Text);
                 }
             } else {
-                this.resultField.setText(String.valueOf(Math.abs(newResult)));
+                this.resultField.setText(String.valueOf(newResult));
             }
         }
         this.char_list.clear();
