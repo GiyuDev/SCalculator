@@ -379,7 +379,21 @@ public class Main_Frame extends javax.swing.JFrame {
     private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroButtonActionPerformed
         this.getChar_list().add('0');
         String previous_text = this.resultField.getText();
-        this.resultField.setText(previous_text + '0');
+        if (previous_text.length() > 0) {
+            if (previous_text.charAt(previous_text.length() - 1) != '0') {
+                this.resultField.setText(previous_text + '0');
+            } else {
+                if (previous_text.charAt(0) != '0') {
+                    this.resultField.setText(previous_text + '0');
+                } else {
+                    if (previous_text.contains(".")) {
+                        if (previous_text.charAt(0) == '0') {
+                            this.resultField.setText(previous_text + '0');
+                        }
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_zeroButtonActionPerformed
 
     private void oneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneButtonActionPerformed
@@ -507,8 +521,7 @@ public class Main_Frame extends javax.swing.JFrame {
             for (int i = 0; i < nums.size(); i++) {
                 result += nums.get(i);
             }
-        }
-        if (previous_text.contains("-")) {
+        } else if (previous_text.contains("-")) {
             String[] split = previous_text.split("\\-");
             List<Double> nums = new ArrayList<>();
 
@@ -526,8 +539,7 @@ public class Main_Frame extends javax.swing.JFrame {
             for (int i = 1; i < nums.size(); i++) {
                 result -= nums.get(i);
             }
-        }
-        if (previous_text.contains("x")) {
+        } else if (previous_text.contains("x")) {
             String[] split = previous_text.split("x");
             List<Double> nums = new ArrayList<>();
 
@@ -545,8 +557,7 @@ public class Main_Frame extends javax.swing.JFrame {
             for (int i = 1; i < nums.size(); i++) {
                 result *= nums.get(i);
             }
-        }
-        if (previous_text.contains("/")) {
+        } else if (previous_text.contains("/")) {
             String[] split = previous_text.split("\\/");
             List<Double> nums = new ArrayList<>();
 
@@ -577,14 +588,34 @@ public class Main_Frame extends javax.swing.JFrame {
         String[] split_result = s_result.split("\\.");
 
         if (split_result[1].length() > 1) {
-            this.resultField.setText(String.valueOf(Math.abs(result)));
+            if (result <= 0.0) {
+                if (this.resultField.getText().contains("+") || this.resultField.getText().contains("-") || this.resultField.getText().contains("x") || this.resultField.getText().contains("/")) {
+                    String newText = this.resultField.getText().substring(0, this.resultField.getText().length() - 1);
+                    this.resultField.setText(newText);
+                } else {
+                    String last_Text = this.resultField.getText();
+                    this.resultField.setText(last_Text);
+                }
+            } else {
+                this.resultField.setText(String.valueOf(Math.abs(result)));
+            }
         } else {
             int newResult = (int) result;
-            this.resultField.setText(String.valueOf(Math.abs(newResult)));
+            if (newResult <= 0) {
+                if (this.resultField.getText().contains("+") || this.resultField.getText().contains("-") || this.resultField.getText().contains("x") || this.resultField.getText().contains("/")) {
+                    String newText = this.resultField.getText().substring(0, this.resultField.getText().length() - 1);
+                    this.resultField.setText(newText);
+                } else {
+                    String last_Text = this.resultField.getText();
+                    this.resultField.setText(last_Text);
+                }
+            } else {
+                this.resultField.setText(String.valueOf(Math.abs(newResult)));
+            }
         }
         this.char_list.clear();
 
-        String toParse = String.valueOf(result);
+        String toParse = this.resultField.getText();
         char[] array = toParse.toCharArray();
 
         for (int i = 0; i < array.length; i++) {
