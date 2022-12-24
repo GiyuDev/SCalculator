@@ -1126,7 +1126,7 @@ public class Main_Frame extends javax.swing.JFrame {
                 String s_result = String.valueOf(result);
                 String[] split_result = s_result.split("\\.");
 
-                if (split_result[1].length() > 0) {
+                if (split_result[1].length() > 1) {
                     this.resultField.setText(String.valueOf(Math.abs(result)) + '/');
                 } else {
                     if (result != 0.0) {
