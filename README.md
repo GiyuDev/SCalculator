@@ -1,5 +1,5 @@
 # SCalculator
- Calculadora hecha en Java usando Java Swing.
+Functional calculator for basic operations made with Java.
  
  
 ![Captura de pantalla 2022-12-23 230157](https://user-images.githubusercontent.com/84726204/209422297-b3f22a05-8cbc-4a3b-9b34-a642e976ce46.png)
